@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../style/Register.css';
 
 const RegisterForm = ({ onMemberAdded }) => {
   const [name, setName] = useState('');
@@ -8,12 +9,13 @@ const RegisterForm = ({ onMemberAdded }) => {
   const [contactInfo, setContactInfo] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-    console.log('Submitting:', { name, address, contactInfo }); // Add this line
+    setLoading(true);
     try {
       const newMember = { name, address, contactInfo };
       const response = await axios.post('http://localhost:8080/api/members', newMember);
@@ -22,50 +24,68 @@ const RegisterForm = ({ onMemberAdded }) => {
       setAddress('');
       setContactInfo('');
       if (onMemberAdded) onMemberAdded(response.data);
+      setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
       setError('Failed to register member.');
-      console.error(err); // Add this line
+      setTimeout(() => setError(null), 3000);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Register New Member</h2>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-        <div>
-          <label>Name:</label><br />
-          <input
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-            style={{ padding: '5px', width: '250px' }}
-          />
+    <div className="register-root">
+      <div className="register-box">
+        <h2 className="register-title">
+          Register New Member
+        </h2>
+        <form onSubmit={handleSubmit} className="register-form">
+          <div>
+            <label className="register-label">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+              className="register-input"
+            />
+          </div>
+          <div>
+            <label className="register-label">Address</label>
+            <input
+              type="text"
+              value={address}
+              onChange={e => setAddress(e.target.value)}
+              required
+              className="register-input"
+            />
+          </div>
+          <div>
+            <label className="register-label">Contact Info</label>
+            <input
+              type="text"
+              value={contactInfo}
+              onChange={e => setContactInfo(e.target.value)}
+              required
+              className="register-input"
+            />
+          </div>
+          <button
+            type="submit"
+            className="register-btn"
+            disabled={loading}
+          >
+            {loading ? 'Registering...' : 'Register'}
+          </button>
+        </form>
+        {error && <p className="register-error">{error}</p>}
+        {success && <p className="register-success">{success}</p>}
+        <div className="register-back">
+          <Link to="/" className="register-link">
+            Back to Home
+          </Link>
         </div>
-        <div>
-          <label>Address:</label><br />
-          <input
-            type="text"
-            value={address}
-            onChange={e => setAddress(e.target.value)}
-            required
-            style={{ padding: '5px', width: '250px' }}
-          />
-        </div>
-        <div>
-          <label>Contact Info:</label><br />
-          <input
-            type="text"
-            value={contactInfo}
-            onChange={e => setContactInfo(e.target.value)}
-            required
-            style={{ padding: '5px', width: '250px' }}
-          />
-        </div>
-        <button type="submit" style={{ marginTop: '10px' }}>Register</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      </div>
     </div>
   );
 };

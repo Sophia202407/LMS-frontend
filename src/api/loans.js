@@ -48,3 +48,21 @@ export async function deleteLoan(id) {
         console.error(`Failed to delete loan ${id}:`, error);
     }
 }
+
+export async function renewLoan(id) {
+    const res = await fetch(`http://localhost:8080/api/loans/${id}/renew`, { method: 'POST' });
+    if (!res.ok) {
+        // Try to parse JSON error, fallback to text
+        let errorMsg = 'Failed to renew loan';
+        try {
+            const data = await res.json();
+            errorMsg = data.message || JSON.stringify(data);
+        } catch {
+            try {
+                errorMsg = await res.text();
+            } catch {}
+        }
+        throw new Error(errorMsg);
+    }
+    return res.json();
+}

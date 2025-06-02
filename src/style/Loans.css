@@ -1,0 +1,145 @@
+.loans-root {
+  min-height: 100vh;
+  background: #1a2236;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.loans-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  background: #fff;
+  text-align: center;
+}
+
+.loans-title {
+  margin-bottom: 32px;
+  color: #2d3a4b;
+}
+
+.loans-btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.loans-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.loans-btn-list {
+  background: #1976d2;
+}
+.loans-btn-list:hover {
+  background: #1251a3;
+}
+
+.loans-btn-create {
+  background: #43a047;
+}
+.loans-btn-create:hover {
+  background: #2e7031;
+}
+
+.loans-btn-history {
+  background: #f9a825;
+  color: #2d3a4b;
+}
+.loans-btn-history:hover {
+  background: #c49000;
+  color: #fff;
+}
+
+.loans-btn-due {
+  background: #0288d1;
+}
+.loans-btn-due:hover {
+  background: #015a87;
+}
+
+.loans-rules-box {
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  color: #2d3a4b;
+  font-size: 0.98rem;
+  text-align: left;
+}
+
+.loans-rules-list {
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+.loans-error {
+  color: #e53935;
+}
+
+.loans-list-title {
+  margin-bottom: 16px;
+  color: #2d3a4b;
+}
+
+.loans-table-wrapper {
+  overflow-x: auto;
+}
+
+.loans-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #e3eafc;
+  color: #2d3a4b;
+}
+
+.loans-table th,
+.loans-table td {
+  padding: 8px;
+  border-bottom: 1px solid #b0bec5;
+}
+
+.loans-table th {
+  background: #cfd8dc;
+  font-weight: bold;
+}
+
+.loans-action-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 0.98rem;
+  transition: background 0.2s;
+}
+
+.loans-renew-btn {
+  background: #43a047;
+  color: #fff;
+}
+.loans-renew-btn:hover {
+  background: #2e7031;
+}
+
+.loans-delete-btn {
+  background: #e53935;
+  color: #fff;
+  margin-right: 0;
+}
+.loans-delete-btn:hover {
+  background: #a02725;
+}

@@ -1,0 +1,45 @@
+.header-top-bar {
+  background: #ed1c24;
+  height: 12px;
+  width: 100%;
+}
+
+.header-main {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px 18px 40px;
+  border-bottom: 4px solid #0a2239;
+}
+
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header-logo-img {
+  height: 100px;
+  margin-right: 16px;
+}
+
+.header-app-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0050b3;
+  letter-spacing: 1px;
+}
+
+.header-nav-link {
+  margin: 0 30px;
+  text-decoration: none;
+  color: #0050b3;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.header-nav-link:hover {
+  color: #ed1c24;
+}

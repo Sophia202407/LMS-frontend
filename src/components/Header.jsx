@@ -1,96 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// You can use your own logo image here
-import logo from '../assets/logo.png'; // Place your logo in src/assets/logo.png
+import logo from '../assets/logo.png';
+import '../style/Header.css';
 
 const Header = () => (
   <div>
     {/* Top red bar */}
-    <div style={{ background: '#ed1c24', height: '12px', width: '100%' }}></div>
+    <div className="header-top-bar"></div>
     {/* Main header */}
-    <header
-      style={{
-        background: '#fff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '18px 40px 18px 40px',
-        borderBottom: '4px solid #0a2239'
-      }}
-    >
+    <header className="header-main">
       {/* Logo and App Name */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Link to="/" className="header-logo-link">
         <img
           src={logo}
           alt="Logo"
-          style={{ height: '100px', marginRight: '16px' }}
+          className="header-logo-img"
         />
-        <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#0050b3', letterSpacing: '1px' }}>
-          My Library 
+        <span className="header-app-name">
+          My Library
         </span>
-      </div>
+      </Link>
       {/* Navigation */}
       <nav>
-        <Link
-          to="/"
-          style={{
-            margin: '0 30px',
-            textDecoration: 'none',
-            color: '#0050b3',
-            fontWeight: 'bold',
-            fontSize: '1.1rem'
-          }}
-        >
-          Dashboard
-        </Link>
-        <Link
-          to="/members"
-          style={{
-            margin: '0 30px',
-            textDecoration: 'none',
-            color: '#0050b3',
-            fontWeight: 'bold',
-            fontSize: '1.1rem'
-          }}
-        >
-          Members
-        </Link>
-        <Link
-          to="/books"
-          style={{
-            margin: '0 30px',
-            textDecoration: 'none',
-            color: '#0050b3',
-            fontWeight: 'bold',
-            fontSize: '1.1rem'
-          }}
-        >
-          Books
-        </Link>
-        <Link
-          to="/loans"
-          style={{
-            margin: '0 30px',
-            textDecoration: 'none',
-            color: '#0050b3',
-            fontWeight: 'bold',
-            fontSize: '1.1rem'
-          }}
-        >
-          Loans
-        </Link>
-        <Link
-          to="/register"
-          style={{
-            margin: '0 30px',
-            textDecoration: 'none',
-            color: '#0050b3',
-            fontWeight: 'bold',
-            fontSize: '1.1rem'
-          }}
-        >
-          Register 
-        </Link>
+        <Link to="/" className="header-nav-link">Dashboard</Link>
+        <Link to="/members" className="header-nav-link">Members</Link>
+        <Link to="/books" className="header-nav-link">Books</Link>
+        <Link to="/loans" className="header-nav-link">Loans</Link>
+        <Link to="/register" className="header-nav-link">Register</Link>
       </nav>
     </header>
   </div>
