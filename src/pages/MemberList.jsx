@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../style/Member.css';
-import memberPic from '../assets/Member.png'; // Make sure Member.png is in src/assets/
+import memberPic from '../assets/Member.png'; 
 
 const MemberList = ({ onSelectMember }) => {
   const [members, setMembers] = useState([]);
@@ -10,7 +11,8 @@ const MemberList = ({ onSelectMember }) => {
   const [showTable, setShowTable] = useState(false);
   const [showMyParticulars, setShowMyParticulars] = useState(false);
   const [myDetails, setMyDetails] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   // Fetch members only when showTable is true
   useEffect(() => {
@@ -32,6 +34,25 @@ const MemberList = ({ onSelectMember }) => {
       .then(res => setMyDetails(res.data))
       .catch(() => setError('Failed to fetch your particulars.'))
       .finally(() => setLoading(false));
+  };
+
+  const handleEdit = (member) => {
+    navigate(`/edit-member/${member.id}`);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this member?')) {
+      setLoading(true);
+      setError(null);
+      try {
+        await axios.delete(`http://localhost:8080/api/members/${id}`);
+        setMembers(members => members.filter(m => m.id !== id));
+      } catch (err) {
+        setError('Failed to delete member.');
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -95,6 +116,7 @@ const MemberList = ({ onSelectMember }) => {
                   <th>ID</th>
                   <th>Name</th>
                   <th>Contact Info</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +133,22 @@ const MemberList = ({ onSelectMember }) => {
                       <td>{member.id}</td>
                       <td>{member.name}</td>
                       <td>{member.contactInfo}</td>
+                      <td>
+                        <button
+                          className="member-btn member-btn-edit"
+                          onClick={() => handleEdit(member)}
+                          style={{ background: 'green', color: '#fff', marginRight: 8 }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="member-btn member-btn-delete"
+                          onClick={() => handleDelete(member.id)}
+                          style={{ background: '#dc3545', color: '#fff' }}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))}
               </tbody>

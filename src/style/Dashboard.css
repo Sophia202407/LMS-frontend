@@ -91,7 +91,7 @@
   width: 90%;
   max-width: 500px;
   min-width: 300px;
-  height: 300px;
+  height: 350px;
   margin-left: 40px;
   border-radius: 16px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
@@ -102,4 +102,23 @@
   width: 100%;
   border-color: #333;
   margin: 32px 0 0 0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-main-row {
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 8px;
+    gap: 32px;
+  }
+  .dashboard-right {
+    width: 100%;
+    padding: 0;
+    background: none;
+  }
+  .dashboard-img {
+    width: 90vw;
+    max-width: 340px;
+    height: 200px;
+  }
 }

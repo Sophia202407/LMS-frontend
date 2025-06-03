@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import libraryImg from '../assets/library.webp';
+import dashboardImg from '../assets/libraryGirl.webp'; 
 import '../style/Dashboard.css';
 
 function getGreeting() {
@@ -57,7 +57,7 @@ const Dashboard = () => {
         {/* Right: Big Image */}
         <div className="dashboard-right">
           <img
-            src={libraryImg}
+            src={dashboardImg}
             alt="Library"
             className="dashboard-img"
           />
