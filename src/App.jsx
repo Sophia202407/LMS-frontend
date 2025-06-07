@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import MemberList from './pages/MemberList';
-import EditMember from './pages/MemberEdit';
+import UserList from './pages/UserList';
+import EditUser from './pages/UserEdit';
 import LoanDueDates from './pages/LoanDueDates';
 import RegisterForm from './pages/RegisterForm';
 import Header from './components/Header';
@@ -10,32 +10,32 @@ import Books from './pages/Books';
 import Loans from './pages/Loans';
 import LoanForm from './components/LoanForm';
 import LoanHistory from './pages/LoanHistory';
+import { AuthProvider } from './context/AuthContext';
 import './App.css';
+import RequireAuth from './components/RequireAuth';
+import LoginForm from './pages/LoginForm';
 
 const App = () => {
-  const [members, setMembers] = useState([]);
-
-  const handleMemberAdded = (newMember) => {
-    setMembers((prev) => [...prev, newMember]);
-  };
-
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/new-loan" element={<LoanForm />} />
-          <Route path="/members" element={<MemberList />} />
-          <Route path="/edit-member/:id" element={<EditMember />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/loans" element={<Loans />} />
-          <Route path="/register" element={<RegisterForm onMemberAdded={handleMemberAdded} />} />
-          <Route path="/loan-history" element={<LoanHistory />} />
-          <Route path="/loan-due-dates" element={<LoanDueDates />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/new-loan" element={<LoanForm />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/edit-user/:id" element={<EditUser />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/loans" element={<Loans />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/loan-history" element={<LoanHistory />} />
+            <Route path="/loan-due-dates" element={<LoanDueDates />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 

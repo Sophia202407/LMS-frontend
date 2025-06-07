@@ -1,4 +1,4 @@
-.member-root {
+.user-root {
   min-height: 100vh;
   background: #1a2236;
   color: #fff;
@@ -8,17 +8,17 @@
   padding-top: 60px;
 }
 
-.member-header-row {
+.user-header-row {
   display: flex;
   align-items: flex-start;
   gap: 36px;
   margin-bottom: 36px;
   width: 100%;
   max-width: 900px;
-  justify-content: flex-start; /* Changed from center to flex-start */
+  justify-content: flex-start;
 }
 
-.member-pic {
+.user-pic {
   width: 360px;
   height: 140px;
   object-fit: contain;
@@ -28,7 +28,7 @@
   padding: 10px;
 }
 
-.member-rules-box {
+.user-rules-box {
   background: #232b43;
   border-radius: 10px;
   padding: 24px 36px;
@@ -36,38 +36,37 @@
   max-width: 500px;
   height: 115px;
   width: 100%;
-  margin-left: 0; /* Ensure it's left-aligned */
-  align-items:flex-start; /* Align the title "membership rules" to the left */
-  display:flex;
+  margin-left: 0;
+  align-items: flex-start;
+  display: flex;
   flex-direction: column;
 }
 
-.member-rules-title {
+.user-rules-title {
   color: #ffe600;
   margin-bottom: 10px;
   font-size: 1.25rem;
   font-weight: bold;
 }
 
-/* Custom list style with icon */
-.member-rules-list {
+.user-rules-list {
   margin: 0;
-  padding-left: 0; /* Remove default padding */
+  padding-left: 0;
   color: #fff;
   font-size: 1.08rem;
-  list-style: none; /* Remove default dots */
+  list-style: none;
   text-align: left;
 }
 
-.member-rules-list li {
+.user-rules-list li {
   position: relative;
-  padding-left: 32px; /* Space for icon */
+  padding-left: 32px;
   margin-bottom: 12px;
   line-height: 1.6;
 }
 
-.member-rules-list li::before {
-  content: "✔️"; /* You can use another Unicode icon or SVG background */
+.user-rules-list li::before {
+  content: "✔️";
   position: absolute;
   left: 0;
   top: 0;
@@ -75,11 +74,11 @@
   color: #ffe600;
 }
 
-.member-btn-row {
+.user-btn-row {
   margin-bottom: 32px;
 }
 
-.member-btn {
+.user-btn {
   padding: 12px 28px;
   border-radius: 6px;
   border: none;
@@ -92,15 +91,15 @@
   margin-right: 20px;
 }
 
-.member-btn-view {
+.user-btn-view {
   background: #4f8cff;
 }
 
-.member-btn-register {
+.user-btn-register {
   background: #28a745;
 }
 
-.member-table-box {
+.user-table-box {
   background: #232b43;
   border-radius: 12px;
   padding: 32px;
@@ -110,7 +109,7 @@
   width: 100%;
 }
 
-.member-table {
+.user-table {
   width: 100%;
   border-collapse: collapse;
   background: transparent;
@@ -119,27 +118,27 @@
   margin: 0 auto;
 }
 
-.member-table th {
+.user-table th {
   border-bottom: 2px solid #ffe600;
   padding: 12px 8px;
   text-align: left;
 }
 
-.member-table td {
+.user-table td {
   padding: 10px 8px;
   border-bottom: 1px solid #333;
 }
 
-.member-row-even {
+.user-row-even {
   background: #263159;
   transition: background 0.2s;
 }
 
-.member-error {
+.user-error {
   color: #ff5252;
 }
 
-.member-search-row {
+.user-search-row {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -147,7 +146,7 @@
   gap: 8px;
 }
 
-.member-search-input {
+.user-search-input {
   padding: 10px 14px;
   border-radius: 8px;
   border: 1.5px solid #3a466e;
@@ -160,7 +159,7 @@
   box-shadow: 0 1px 4px rgba(0,0,0,0.07);
 }
 
-.member-search-input:focus {
+.user-search-input:focus {
   border: 1.5px solid #ffe600;
   box-shadow: 0 2px 8px rgba(255,230,0,0.08);
 }

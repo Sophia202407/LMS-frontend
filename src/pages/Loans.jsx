@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getLoans, deleteLoan, renewLoan } from '../api/loans'; // <-- import renewLoan
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../style/Loans.css'; // <-- Import the CSS file
 
 // Loans Component

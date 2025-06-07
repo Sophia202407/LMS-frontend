@@ -1,68 +1,121 @@
-const API_URL = 'http://localhost:8080/api/loans';
+const API_BASE_URL = 'http://localhost:8080/api/loans';
 
+// Simple function to get common headers
+const getHeaders = () => ({
+    'Content-Type': 'application/json'
+});
+
+// Get all loans - simplified for small project
 export async function getLoans() {
     try {
-        const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
-        return await res.json();
+        const endpoint = `${API_BASE_URL}/all`;
+        
+        const response = await fetch(endpoint, {
+            method: 'GET',
+            headers: getHeaders(),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Error: ${response.status}`);
+        }
+
+        return await response.json();
     } catch (error) {
-        console.error('Failed to fetch loans:', error);
-        return [];
+        console.error('Error fetching loans:', error);
+        throw new Error(error.message || 'Failed to fetch loans');
     }
 }
 
+// Get single loan by ID
 export async function getLoan(id) {
     try {
-        const res = await fetch(`${API_URL}/${id}`);
-        if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
-        return await res.json();
-    } catch (error) {
-        console.error(`Failed to fetch loan ${id}:`, error);
-        return null;
-    }
-}
-
-export async function createLoan(loan) {
-    try {
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loan),
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'GET',
+            headers: getHeaders(),
+            credentials: 'include'
         });
-        if (!res.ok) {
-            const error = await res.text();
-            throw new Error(error);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Error: ${response.status}`);
         }
-        return await res.json();
+
+        return await response.json();
     } catch (error) {
-        console.error('Failed to create loan:', error);
-        throw error;
+        console.error(`Error fetching loan ${id}:`, error);
+        throw new Error(error.message || 'Failed to fetch loan');
     }
 }
 
+// Create new loan
+export async function createLoan(loanData) {
+    try {
+        const response = await fetch(API_BASE_URL, {
+            method: 'POST',
+            headers: getHeaders(),
+            credentials: 'include',
+            body: JSON.stringify(loanData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating loan:', error);
+        throw new Error(error.message || 'Failed to create loan');
+    }
+}
+
+// Delete loan (librarian only)
 export async function deleteLoan(id) {
     try {
-        const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-        if (!res.ok) throw new Error(`Error: ${res.status} ${res.statusText}`);
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'DELETE',
+            headers: getHeaders(),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Error: ${response.status}`);
+        }
+
+        // DELETE returns no content, so don't try to parse JSON
+        return true;
     } catch (error) {
-        console.error(`Failed to delete loan ${id}:`, error);
+        console.error(`Error deleting loan ${id}:`, error);
+        throw new Error(error.message || 'Failed to delete loan');
     }
 }
 
+// Renew loan
 export async function renewLoan(id) {
-    const res = await fetch(`http://localhost:8080/api/loans/${id}/renew`, { method: 'POST' });
-    if (!res.ok) {
-        // Try to parse JSON error, fallback to text
-        let errorMsg = 'Failed to renew loan';
-        try {
-            const data = await res.json();
-            errorMsg = data.message || JSON.stringify(data);
-        } catch {
-            try {
-                errorMsg = await res.text();
-            } catch {}
+    try {
+        const response = await fetch(`${API_BASE_URL}/${id}/renew`, {
+            method: 'POST',
+            headers: getHeaders(),
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Error: ${response.status}`);
         }
-        throw new Error(errorMsg);
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error renewing loan:', error);
+        throw new Error(error.message || 'Failed to renew loan');
     }
-    return res.json();
 }
+
+//Jun.7 Based on the backend changes we've made (especially introducing GET /api/loans/own for members 
+// and the consistent error response structure for business logic errors), 
+// your loans.js file needs a few updates to fully support this.
+// - andling Member-Specific Loan Fetching (/api/loans/own)
+// - robust Error Handling for createLoan and renewLoan

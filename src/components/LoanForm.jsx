@@ -6,10 +6,8 @@ import '../style/LoanForm.css';
 
 function LoanForm({ onLoanCreated }) {
   const [loan, setLoan] = useState({
-    userId: '',
-    bookId: '',
+    username: '',
     title: '',
-    status: ''
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -44,17 +42,9 @@ function LoanForm({ onLoanCreated }) {
         <h2 className="loanform-title">Create New Loan</h2>
         <form className="loanform-form" onSubmit={handleSubmit}>
           <input
-            name="userId"
-            placeholder="User ID"
-            value={loan.userId}
-            onChange={handleChange}
-            required
-            className="loanform-input"
-          />
-          <input
-            name="bookId"
-            placeholder="Book ID"
-            value={loan.bookId}
+            name="username"
+            placeholder="User Name"
+            value={loan.username}
             onChange={handleChange}
             required
             className="loanform-input"
@@ -67,19 +57,7 @@ function LoanForm({ onLoanCreated }) {
             required
             className="loanform-input"
           />
-          <select
-            name="status"
-            value={loan.status}
-            onChange={handleChange}
-            required
-            className="loanform-select"
-          >
-            <option value="">Select Status</option>
-            <option value="BORROWED">BORROWED</option>
-            <option value="ACTIVE">ACTIVE</option>
-            <option value="OVERDUE">OVERDUE</option>
-            <option value="RETURNED">RETURNED</option>
-          </select>
+        
           <button
             type="submit"
             className="loanform-btn"

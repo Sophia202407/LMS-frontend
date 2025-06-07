@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import '../style/Register.css';
 
 const RegisterForm = ({ onMemberAdded }) => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -17,12 +17,12 @@ const RegisterForm = ({ onMemberAdded }) => {
     setSuccess(null);
     setLoading(true);
     try {
-      const newMember = { name, address, contactInfo };
-      const response = await axios.post('http://localhost:8080/api/members', newMember);
+      const newMember = { username, email, password };
+      const response = await axios.post('http://localhost:8080/api/auth/register', newMember);
       setSuccess('Member registered successfully!');
-      setName('');
-      setAddress('');
-      setContactInfo('');
+      setUsername('');
+      setEmail('');
+      setPassword('');
       if (onMemberAdded) onMemberAdded(response.data);
       setTimeout(() => setSuccess(null), 3000);
     } catch (err) {
@@ -41,31 +41,31 @@ const RegisterForm = ({ onMemberAdded }) => {
         </h2>
         <form onSubmit={handleSubmit} className="register-form">
           <div>
-            <label className="register-label">Name</label>
+            <label className="register-label">UserName</label>
             <input
               type="text"
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={username}
+              onChange={e => setUsername(e.target.value)}
               required
               className="register-input"
             />
           </div>
           <div>
-            <label className="register-label">Address</label>
+            <label className="register-label">Email</label>
             <input
               type="text"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               required
               className="register-input"
             />
           </div>
           <div>
-            <label className="register-label">Contact Info</label>
+            <label className="register-label">Password</label>
             <input
               type="text"
-              value={contactInfo}
-              onChange={e => setContactInfo(e.target.value)}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               required
               className="register-input"
             />

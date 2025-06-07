@@ -1,4 +1,4 @@
-.edit-member-container {
+.edit-user-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -6,7 +6,7 @@
   background: #181f2a;
 }
 
-.edit-member-form {
+.edit-user-form {
   background: #fff;
   padding: 2.5rem 2rem;
   border-radius: 16px;
@@ -16,7 +16,7 @@
   width: 100%;
 }
 
-.edit-member-form h2 {
+.edit-user-form h2 {
   margin-bottom: 1.5rem;
   color: #1976d2;
 }
