@@ -47,16 +47,18 @@
 }
 
 .books-btn {
-  height: 40px;
-  padding: 0 20px;
+  flex-shrink: 0; /* Prevent shrinking */
+  height: 36px;
+  padding: 0 14px;
   border-radius: 4px;
   border: none;
   background: #1976d2;
   color: #fff;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   margin-right: 10px;
+  white-space: nowrap; /* Keep text from wrapping */
 }
 
 .books-btn-cancel {
@@ -94,4 +96,12 @@
 
 .books-action-btn-delete {
   background: #e53935;
+}
+
+.books-action-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap; /* Optional: allows wrapping on smaller screens */
+  justify-content: center;
+  white-space: nowrap;
 }

@@ -8,12 +8,47 @@ export const AuthProvider = ({ children }) => {
   const [authError, setAuthError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // useEffect to initialize user from localStorage or by fetching 'me'
   useEffect(() => {
-    fetch('http://localhost:8080/api/auth/me', { credentials: 'include' })
-      .then(res => res.ok ? res.json() : null)
-      .then(data => setUser(data))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false));
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setLoading(false); // User is loaded from localStorage, so stop loading
+      } catch (e) {
+        console.error("Failed to parse user from localStorage", e);
+        localStorage.removeItem('user'); // Clear invalid data
+        setUser(null);
+        setLoading(false);
+      }
+    } else {
+      // If no user in localStorage, try fetching from backend (e.g., for session-based auth)
+      fetch('http://localhost:8080/api/auth/me', { credentials: 'include' })
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            // If API /me returns non-ok status (e.g., 401), clear any potential stale user
+            localStorage.removeItem('user');
+            return null;
+          }
+        })
+        .then(data => {
+          if (data) {
+            setUser(data);
+            localStorage.setItem('user', JSON.stringify(data)); // Store it if /me is successful
+          } else {
+            setUser(null);
+          }
+        })
+        .catch((err) => {
+          console.error("Error fetching user from /api/auth/me:", err);
+          setUser(null);
+          localStorage.removeItem('user'); // Clear if network error or authentication fails
+        })
+        .finally(() => setLoading(false));
+    }
   }, []);
 
   const login = async (credentials) => {
@@ -42,6 +77,8 @@ export const AuthProvider = ({ children }) => {
         const userData = await res.json(); // Await the JSON to get the actual user data
         console.log("Login successful response data:", userData); // Log the actual data
         setUser(userData); // Set the user state with the received data
+        // *** IMPORTANT: Save user data to localStorage on successful login ***
+        localStorage.setItem('user', JSON.stringify(userData));
         return true;
       } else {
         const errorData = await res.json().catch(() => ({})); // Await the JSON, handle potential parse errors
@@ -57,6 +94,8 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await fetch('http://localhost:8080/api/logout', { method: 'POST', credentials: 'include' });
     setUser(null);
+    // *** IMPORTANT: Clear user data from localStorage on logout ***
+    localStorage.removeItem('user');
   };
 
   // Role-based helpers (user.role is a string, e.g. "LIBRARIAN")
@@ -79,3 +118,7 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+
+
+// Jun.8 update: Added error handling for login and fetch user

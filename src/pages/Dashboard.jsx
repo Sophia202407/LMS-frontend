@@ -17,7 +17,7 @@ const Dashboard = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim()) {
-      navigate(`/books?query=${encodeURIComponent(search.trim())}`);
+      navigate(`/booksearch?query=${encodeURIComponent(search.trim())}`);
     }
   };
 

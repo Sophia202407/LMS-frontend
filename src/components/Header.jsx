@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import '../style/Header.css';
@@ -38,6 +39,10 @@ const Header = () => {
           )}
           <Link to="/loans" className="header-nav-link">Loans</Link>
           <Link to="/register" className="header-nav-link">Register</Link>
+          {/* 🔍 Search Icon */}
+          <Link to="/booksearch" className="header-search-icon" title="Search">
+            <FaSearch size={18} />
+          </Link>
           {!user ? (
             <button className="header-nav-link" onClick={handleLogin} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
               Log In

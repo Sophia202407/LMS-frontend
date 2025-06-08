@@ -14,6 +14,7 @@ import { AuthProvider } from './context/AuthContext';
 import './App.css';
 import RequireAuth from './components/RequireAuth';
 import LoginForm from './pages/LoginForm';
+import BookSearch from './pages/BookSearch';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/users" element={<UserList />} />
             <Route path="/edit-user/:id" element={<EditUser />} />
             <Route path="/books" element={<Books />} />
+            <Route path="/booksearch" element={<BookSearch />} />
             <Route path="/loans" element={<Loans />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/loan-history" element={<LoanHistory />} />

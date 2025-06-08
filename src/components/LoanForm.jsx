@@ -7,7 +7,8 @@ import '../style/LoanForm.css';
 function LoanForm({ onLoanCreated }) {
   const [loan, setLoan] = useState({
     username: '',
-    title: '',
+    isbn: '',
+    status: 'active' // Default status
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -20,14 +21,20 @@ function LoanForm({ onLoanCreated }) {
     e.preventDefault();
     setError('');
     try {
+      const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      
+       // *** ADD THIS LINE TO TRIM THE ISBN ***
+      const trimmedIsbn = loan.isbn.trim(); 
+
       await createLoan({
-        user: { id: loan.userId },
-        book: { id: loan.bookId },
-        title: loan.title,
+        username: loan.username,
+        // *** USE THE TRIMMED ISBN HERE ***
+        isbn: trimmedIsbn, 
         status: loan.status,
-        borrowDate: new Date().toISOString()
+        borrowDate: today
       });
-      setLoan({ userId: '', bookId: '', title: '', status: '' });
+
+      setLoan({ username: '', isbn: '', status: 'active' });
       if (onLoanCreated) onLoanCreated();
       alert('Loan created!');
       setTimeout(() => navigate('/loans'), 0);
@@ -50,13 +57,22 @@ function LoanForm({ onLoanCreated }) {
             className="loanform-input"
           />
           <input
-            name="title"
-            placeholder="Loan Title"
-            value={loan.title}
+            name="isbn"
+            placeholder="ISBN"
+            value={loan.isbn}
             onChange={handleChange}
             required
             className="loanform-input"
           />
+          <select
+            name="status"
+            value={loan.status}
+            onChange={handleChange}
+            className="loanform-input"
+          >
+            <option value="active">Active</option>
+            <option value="returned">Returned</option>
+          </select>
         
           <button
             type="submit"
@@ -72,3 +88,9 @@ function LoanForm({ onLoanCreated }) {
 }
 
 export default LoanForm;
+
+
+
+//Jun.8:update
+// The trim() method removes whitespace from both ends of a string. 
+// Whitespace in this context includes spaces, tabs (\t), newlines (\n), carriage returns (\r), form feeds (\f), and vertical tabs (\v).

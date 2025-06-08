@@ -62,44 +62,6 @@ const Books = () => {
     setEditingId(book.id);
   };
 
-const handleBorrow = async (book) => {
-  try {
-    // Step 1: Get logged-in user info from localStorage (frontend)
-    // Assume you saved the user info on login like:
-    // localStorage.setItem('user', JSON.stringify({ id: 123, name: 'Alice' }));
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.id) {
-      alert("User not logged in. Please login first.");
-      return;
-    }
-
-    const userId = user.id;
-
-    // Step 2: Proceed with borrowing
-    const today = new Date();
-    const dueDate = new Date();
-    dueDate.setDate(today.getDate() + 14);
-
-    await axios.post(
-      "http://localhost:8080/api/loans",
-      {
-        book: { id: book.id },
-        user: { id: userId },
-        loanDate: today.toISOString().split("T")[0],
-        dueDate: dueDate.toISOString().split("T")[0],
-      },
-      {
-       withCredentials: true, // Required for session cookies
-      }
-    );
-
-    alert("Book borrowed successfully!");
-  } catch (error) {
-    console.error(error);
-    alert("Failed to borrow book.");
-  }
-};
-
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this book?')) return;
     try {
@@ -246,12 +208,7 @@ const handleBorrow = async (book) => {
                 <td>{book.copiesAvailable}</td>
                 <td>{book.status}</td>
                 <td>
-                      <button
-                    onClick={() => handleBorrow(book)}
-                    className="books-btn books-action-btn"
-                  >
-                    Borrow
-                  </button>
+                  <div class="books-action-group">
                   <button
                     onClick={() => handleEdit(book)}
                     className="books-btn books-action-btn"
@@ -264,6 +221,7 @@ const handleBorrow = async (book) => {
                   >
                     Delete
                   </button>
+                  </div>
                 </td>
               </tr>
             ))}
