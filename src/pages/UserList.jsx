@@ -177,7 +177,7 @@ const UserList = ({ isLibrarian }) => {
               onClick={handleViewAllUsers}
               disabled={loading}
             >
-              👥 View All Users
+              👥 All Users
             </button>
             {isLibrarian && (
               <button
@@ -185,7 +185,7 @@ const UserList = ({ isLibrarian }) => {
                 onClick={() => navigate('/register')}
                 disabled={loading}
               >
-                ➕ Register New User
+                ➕ New User
               </button>
             )}
           </div>

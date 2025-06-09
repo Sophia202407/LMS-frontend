@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { getLoans, deleteLoan, renewLoan } from '../api/loans'; // <-- import renewLoan
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../style/Loans.css'; // <-- Import the CSS file
+import '../style/Loans.css'; 
 
 // Loans Component
 const Loans = () => {
@@ -143,7 +143,7 @@ const Loans = () => {
                                 <thead>
                                     <tr>
                                         <th>User ID</th>
-                                        <th>Book</th>
+                                        <th>Book Title</th>
                                         <th>Status</th>
                                         <th>Due Date</th>
                                         <th>Actions</th>
