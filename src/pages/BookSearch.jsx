@@ -48,26 +48,26 @@ const BookSearch = () => {
 
   const handleBorrow = async (book) => {
       console.log("User from AuthContext:", user);
-      console.log("User ID:", user?.id);
-      console.log("User role:", user?.role);
+      console.log("User username:", user?.username);
+      console.log("Book ISBN:", book?.isbn);
       
     // Use user from AuthContext instead of localStorage
-    if (!user || !user.id) {
+    if (!user || !user.username) {
       alert("User not logged in. Please login first.");
+      return;
+    }
+    // Check if book has ISBN
+    if (!book.isbn) {
+      alert("Book ISBN not available. Cannot borrow this book.");
       return;
     }
 
     try {
-      const today = new Date();
-      const dueDate = new Date();
-      dueDate.setDate(today.getDate() + 14);
-
       await axios.post("http://localhost:8080/api/loans", {
-        book: { id: book.id },
-        user: { id: user.id },
-        loanDate: today.toISOString().split("T")[0],
-        dueDate: dueDate.toISOString().split("T")[0]
-      }, { withCredentials: true });
+      username: user.username,  // ✅ Send username, not user ID
+      isbn: book.isbn,          // ✅ Send ISBN, not book ID
+      loanDate: new Date().toISOString().split("T")[0] // ✅ Optional - today's date (matches DTO field name)
+    }, { withCredentials: true });
 
       alert("Book borrowed successfully!");
     } catch (error) {

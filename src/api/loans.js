@@ -128,13 +128,17 @@ export async function renewLoan(id) {
 
         if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(errorText || `Error: ${response.status}`);
+            console.error('Server response:', errorText, 'Status:', response.status);
+            
+            // Don't wrap in another Error - just throw with the server message
+            throw new Error(errorText || `HTTP ${response.status}: Failed to renew loan`);
         }
 
         return await response.json();
     } catch (error) {
         console.error('Error renewing loan:', error);
-        throw new Error(error.message || 'Failed to renew loan');
+        // Don't wrap the error again - just re-throw it
+        throw error; // This preserves the original error
     }
 }
 
@@ -170,4 +174,6 @@ export async function returnLoan(id) {
 //Jun.8 upate:
 // add renew and return loan functions
 // add getMyLoans function to fetch loans for the current user
+
+
 

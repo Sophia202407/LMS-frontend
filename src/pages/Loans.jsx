@@ -63,6 +63,40 @@ const Loans = () => {
         }
     };
 
+     const handleReturn = async (id) => {
+        setError(null);
+        setLoading(true);
+        try {
+            // Call the return loan API endpoint
+            await axios.put(`http://localhost:8080/api/loans/${id}/return`, {}, { 
+                withCredentials: true 
+            });
+            
+            // Show success message
+            alert('Book returned successfully!');
+            
+            // Refresh the loans list to show updated status
+            await fetchLoans();
+        } catch (err) {
+            // Debug: log the error object to inspect its structure
+            console.log('Return loan error:', err);
+
+            let msg = 'Failed to return book.';
+            if (err?.response) {
+                if (typeof err.response.data === 'string') {
+                    msg = err.response.data;
+                } else if (err.response.data?.message) {
+                    msg = err.response.data.message;
+                }
+            } else if (err?.message) {
+                msg = err.message;
+            }
+            setError(msg);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="loans-root">
             <div className="loans-container">
@@ -108,21 +142,22 @@ const Loans = () => {
                             <table className="loans-table">
                                 <thead>
                                     <tr>
+                                        <th>User ID</th>
                                         <th>Book</th>
                                         <th>Status</th>
                                         <th>Due Date</th>
-                                        <th>User ID</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {loans.map((loan) => (
                                         <tr key={loan.id}>
+                                            <td>{loan.user?.id || 'N/A'}</td>
                                             <td>{loan.book?.title || loan.book?.id || 'N/A'}</td>
                                             <td>{loan.status}</td>
                                             <td>{loan.dueDate || 'N/A'}</td>
-                                            <td>{loan.user?.id || 'N/A'}</td>
                                             <td>
+                                                <div className="loans-actions-group">
                                                 <button
                                                     className="loans-action-btn loans-renew-btn"
                                                     onClick={() => handleRenew(loan.id)}
@@ -130,11 +165,19 @@ const Loans = () => {
                                                     Renew
                                                 </button>
                                                 <button
+                                                    className="loans-action-btn loans-return-btn"
+                                                    onClick={() => handleReturn(loan.id)}
+                                                    disabled={loan.status === 'RETURNED'}
+                                                >
+                                                    Return
+                                                </button>
+                                                <button
                                                     className="loans-action-btn loans-delete-btn"
                                                     onClick={() => handleDelete(loan.id)}
                                                 >
                                                     Delete
                                                 </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
